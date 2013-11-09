@@ -4,31 +4,26 @@ body {
 .coder-rage {
   width: 350px;
   padding: 10px;
-background: rgb(240,240,240); /* Old browsers */
-background: -moz-linear-gradient(-45deg,  rgba(240,240,240,1) 0%, rgba(208,208,208,1) 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(240,240,240,1)), color-stop(100%,rgba(208,208,208,1))); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(-45deg,  rgba(240,240,240,1) 0%,rgba(208,208,208,1) 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(-45deg,  rgba(240,240,240,1) 0%,rgba(208,208,208,1) 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(-45deg,  rgba(240,240,240,1) 0%,rgba(208,208,208,1) 100%); /* IE10+ */
-background: linear-gradient(135deg,  rgba(240,240,240,1) 0%,rgba(208,208,208,1) 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#d0d0d0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
+  background: rgb(240,240,240); /* Old browsers */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(240,240,240,1)), color-stop(100%,rgba(208,208,208,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg,  rgba(240,240,240,1) 0%,rgba(208,208,208,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: linear-gradient(135deg,  rgba(240,240,240,1) 0%,rgba(208,208,208,1) 100%); /* W3C */
   border: 1px solid #ccc;
   -webkit-border-radius: 7px;
   border-radius: 7px;
 }
-.coder-rage h3,
-.coder-rage .url {
-  font-family: Verdana, sans serif;
+  .coder-rage h3,
+  .coder-rage .url {
+    font-family: sans-serif;
+  }
+
+.thumbnail a {
+  border: 0;
 }
-.coder-rage h3 {
-  margin: 10px 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+
 .thumbnail img {
   max-width: 100%;
-  border: 1px solid #ccc;
+  border: 0;
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
@@ -55,6 +50,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', end
     font-weight: bold;
   }
 
+.link-wrapper {
+  width: 370px;
+}
 .coder-rage-link {
   margin: 10px 0;
   color: #333;
@@ -62,8 +60,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', end
   font-family: sans-serif;
   text-decoration: none;
   display: inline-block;
+  float: right;
 }
-.coder-rage-link:hover {
-  text-decoration: underline;
-  color: #444;
-}
+  .coder-rage-link:hover {
+    text-decoration: underline;
+    color: #444;
+  }

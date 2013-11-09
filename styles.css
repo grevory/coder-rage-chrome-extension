@@ -17,15 +17,46 @@ body {
     font-family: sans-serif;
   }
 
-.thumbnail a {
-  border: 0;
+.thumbnail {
+  background: url('img/loading.gif') no-repeat center center;
+  width: 100%;
+  height: 100px;
 }
 
 .thumbnail img {
-  max-width: 100%;
+  display: none;
+  width: 100%;
   border: 0;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.thumbnail .url {
+  width: 100%;
+  background: #fff;
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: text;
+  display: none;
+}
+.thumbnail .url p {
+  padding: 5px;
+  margin: 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
+
+.reload-image {
+  cursor: pointer;
+  float: right;
+  margin-top: 10px;
+  height: 22px;
+  width: 22px;
+  display: none;
 }
 
 .tags {

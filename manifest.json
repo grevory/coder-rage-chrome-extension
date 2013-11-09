@@ -1,24 +1,22 @@
-{
-	name: "Coder Rage GIFs",
-	description: "Random GIFs to represent your anger, rage, ire, or annoyance for bad code.",
-	permissions: [
-		"tabs",
-	],
-	version: "2.0.0.3",
-	manifest_version: 2,
-	icons: {
-		16: "img/",
-		48: "img/",
-		128: "img/"
-	},
-	page_action: {
-		default_icon: "img/youtube-image-previews-icon-19.png",
-		name: "Click to maximize in the tab",
-		default_popup: "popup.html"
-	},
-	background: {
-		scripts: [
-			"background.js"
-		]
-	}
+{   
+  "name": "Coder Rage GIFs",
+  "description": "Random GIFs to represent your anger, rage, ire, or annoyance for bad code.",
+  "permissions": [ "tabs" ],
+  "version": "2.0.0.3",
+  "manifest_version":2,
+  "icons": { 
+    "16": "img/",
+    "48": "img/",
+    "128": "img/"
+  },
+  "page_action": {
+    "default_icon": "img/youtube-image-previews-icon-19.png",
+    "name": "Click to maximize in the tab",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  }
 }

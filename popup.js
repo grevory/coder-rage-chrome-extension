@@ -1,13 +1,18 @@
 var coderRageGifs = {
-	
-	apiBaseUrl: 'api.tumblr.com/v2/blog/coderrage',
-	consumerKey: '',
 
-	init: function() {
+  constants: null, // These will be loaded later
 
-	}
+  init: function() {
+    this.loadConstants();
+  },
 
-	getPosts: {
-		
-	}
+  loadConstants: function(){
+    var imported = document.createElement('script');
+    imported.src = 'constants.js';
+    document.head.appendChild(imported);
+  },
+
+  getPosts: {
+
+  }
 };

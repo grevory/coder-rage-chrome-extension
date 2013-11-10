@@ -1,38 +1,25 @@
 var coderRageGifs = {
 
-  constants: null, // These will be loaded later
+  // Tumblr Oauth
+  consumerKey: 'CHifS4iLssRkgc9tDmdvjAh1HCc8Qtg5AxtfZGFbLh713R1r5T',
+
+  // URLs
+  corsProxyUrl: 'http://www.corsproxy.com/',
+  apiBaseUrl: 'api.tumblr.com/v2/blog/coderrage.tumblr.com/',
+  apiPhotosUrl: 'posts/photo/',
+
+  // Posts
   posts: null,
   randomPost: null,
+  // Photos
+  width: 350,
 
   init: function() {
     
     var $this = this;
-    $this.loadConstants();
     
-    // We cannot continue execution until the constants are ready    
-    var constantsAreReady = function() {
-      $('.coder-rage').css('width', $this.constants.width);
-      $this.getPosts();
-    };
-
-    // Keep trying to load the constants
-    var loadingConstants;
-    var waitForConstants = function() {
-      loadingConstants = setTimeout(function() {
-        if (!!$this.constants) {
-          clearTimeout(loadingConstants);
-          return constantsAreReady();
-        }
-        waitForConstants();  
-      }, 10);
-    };
-    waitForConstants();
-  },
-
-  loadConstants: function() {
-    var imported = document.createElement('script');
-    imported.src = 'constants.js';
-    document.head.appendChild(imported);
+    $('.coder-rage').css('width', $this.width);
+    $this.getPosts();
   },
 
   getPosts: function() {
@@ -43,14 +30,15 @@ var coderRageGifs = {
           return null;
         }
         $this.posts = data.response.posts;
+
         $this.setTemplate();
       }
     });
   },
 
-  setTemplate: function() {
+  setTemplate: function(tag) {
     var $this = this;
-    var post = $this.getRandomPost();
+    var post = $this.getRandomPost(tag);
 
     if (!post) {
       return null;
@@ -78,13 +66,14 @@ var coderRageGifs = {
       .bind('click',function(){
         $this.setTemplate();
       });
+    $('.tags')
+      .empty()
 
     // Add the tags
     if (!!post.tags.length) {
       $.each(post.tags, function(key, tag){
         $('.tags')
-          .empty()
-          .append('<li class="tag">'+tag+'</li>');
+          .append('<li class="tag" onclick="coderRageGifs.setTemplate(\''+tag+'\')">'+tag+'</li>');
       })
     }
   },
@@ -93,10 +82,10 @@ var coderRageGifs = {
     if (!image) {
       return null;
     }
-    return Math.round(image.height * this.constants.width / image.width);
+    return Math.round(image.height * this.width / image.width);
   },
 
-  getRandomPost: function() {
+  getRandomPost: function(tag) {
     var posts = this.posts;
     var post = null;
 
@@ -104,8 +93,30 @@ var coderRageGifs = {
       return post;
     }
 
+    if (!!tag) {
+      posts = this.getPostsByTag(tag);
+    }
+
     this.randomPost = posts[Math.floor(Math.random() * posts.length)];
     return this.randomPost;
+  },
+
+  getPostsByTag: function(tag) {
+    var $this = this;
+    var posts = this.posts;
+
+    if (!posts || !tag) {
+      return null;
+    }
+
+    var taggedPosts = [];
+    $.each(posts, function(key, post){
+      if ($.inArray(tag, post.tags) >=0 ) {
+        taggedPosts.push(post);
+      }
+    });
+
+    return taggedPosts;
   },
 
   extractImage: function(post) {
@@ -124,11 +135,11 @@ var coderRageGifs = {
 
   getApiUrl: function(type, value) {
     if (type === "photos" || !type) {
-      return this.constants.corsProxyUrl + this.constants.apiBaseUrl + this.constants.apiPhotosUrl + '?api_key=' + this.constants.consumerKey;
+      return this.corsProxyUrl + this.apiBaseUrl + this.apiPhotosUrl + '?api_key=' + this.consumerKey;
     }
 
     if (type === "tag") {
-     return this.constants.corsProxyUrl + this.constants.apiBaseUrl + this.constants.apiPhotosUrl + '?api_key=' + this.constants.consumerKey + '&tag=' + value; 
+     return this.corsProxyUrl + this.apiBaseUrl + this.apiPhotosUrl + '?api_key=' + this.consumerKey + '&tag=' + value; 
     }
   },
 

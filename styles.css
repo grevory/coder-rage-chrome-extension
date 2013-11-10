@@ -79,6 +79,10 @@ body {
     font-size: 12px;
     color: #f58220;
     font-weight: bold;
+    cursor: pointer;
+  }
+  .tag:hover {
+    color: #F5A45F;
   }
 
 .link-wrapper {

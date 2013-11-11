@@ -84,6 +84,10 @@ body {
   .tag:hover {
     color: #F5A45F;
   }
+  .tag.selected,
+  .tag.selected:hover {
+    color: #fff;
+  }
 
 .link-wrapper {
   width: 370px;

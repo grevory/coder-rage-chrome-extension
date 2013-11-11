@@ -11,14 +11,16 @@ var coderRageGifs = {
   // Posts
   posts: null,
   randomPost: null,
+  tag: null,
+
   // Photos
-  width: 350,
+  imageWidth: 350,
 
   init: function() {
     
     var $this = this;
     
-    $('.coder-rage').css('width', $this.width);
+    $('.coder-rage').css('width', $this.imageWidth);
     $this.getPosts();
   },
 
@@ -36,10 +38,14 @@ var coderRageGifs = {
     });
   },
 
-  setTemplate: function(tag) {
+  setTemplate: function(selectedTag) {
     var $this = this;
-    var post = $this.getRandomPost(tag);
 
+    if (!!selectedTag) {
+      $this.tag = selectedTag;
+    }
+
+    var post = $this.getRandomPost(selectedTag);
     if (!post) {
       return null;
     }
@@ -73,7 +79,7 @@ var coderRageGifs = {
     if (!!post.tags.length) {
       $.each(post.tags, function(key, tag){
         $('.tags')
-          .append('<li class="tag" onclick="coderRageGifs.setTemplate(\''+tag+'\')">'+tag+'</li>');
+          .append('<li class="tag'+(selectedTag === tag ? ' selected' : '')+'" onclick="coderRageGifs.setTemplate(\''+tag+'\')">#'+tag+'</li>');
       })
     }
   },
@@ -82,7 +88,7 @@ var coderRageGifs = {
     if (!image) {
       return null;
     }
-    return Math.round(image.height * this.width / image.width);
+    return Math.round(image.height * this.imageWidth / image.width);
   },
 
   getRandomPost: function(tag) {

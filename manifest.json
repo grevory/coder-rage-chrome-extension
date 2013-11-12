@@ -1,10 +1,10 @@
-{   
+{
   "name": "Coder Rage GIFs",
   "description": "Random GIFs to represent your anger, rage, ire, or annoyance for bad code.",
   "permissions": [ "tabs", "http://api.tumblr.com/*" ],
   "version": "0.1",
   "manifest_version":2,
-  "icons": { 
+  "icons": {
     "16": "img/coder-rage-logo-16.png",
     "48": "img/coder-rage-logo-48.png",
     "128": "img/coder-rage-logo-128.png"

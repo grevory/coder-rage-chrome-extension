@@ -1,7 +1,7 @@
 {
   "name": "Coder Rage GIFs",
   "description": "Random GIFs to represent your anger, rage, ire, or annoyance for bad code.",
-  "version": "0.1",
+  "version": "0.2",
   "manifest_version":2,
   "icons": {
     "16": "img/coder-rage-logo-16.png",

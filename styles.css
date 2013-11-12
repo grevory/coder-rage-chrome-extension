@@ -1,16 +1,10 @@
 body {
-  background: #000;
+  background: #000 url('img/coder-rage-bg.png');
 }
 .coder-rage {
   width: 350px;
   padding: 10px;
-  background: rgb(240,240,240); /* Old browsers */
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(240,240,240,1)), color-stop(100%,rgba(208,208,208,1))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(-45deg,  rgba(240,240,240,1) 0%,rgba(208,208,208,1) 100%); /* Chrome10+,Safari5.1+ */
-  background: linear-gradient(135deg,  rgba(240,240,240,1) 0%,rgba(208,208,208,1) 100%); /* W3C */
-  border: 1px solid #ccc;
-  -webkit-border-radius: 7px;
-  border-radius: 7px;
+  
 }
   .coder-rage h3,
   .coder-rage .url {
@@ -54,9 +48,13 @@ body {
   cursor: pointer;
   float: right;
   margin-top: 10px;
-  height: 22px;
-  width: 22px;
+  height: 25px;
+  width: 48px;
   display: none;
+}
+
+.clear {
+  clear: both;
 }
 
 .tags {
@@ -94,7 +92,7 @@ body {
 }
 .coder-rage-link {
   margin: 10px 0;
-  color: #333;
+  color: #f58220;
   font-size: 12px;
   font-family: sans-serif;
   text-decoration: none;
@@ -103,5 +101,5 @@ body {
 }
   .coder-rage-link:hover {
     text-decoration: underline;
-    color: #444;
+    color: #F5A45F;
   }

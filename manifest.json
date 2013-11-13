@@ -1,5 +1,6 @@
 {
-  "name": "Coder Rage GIFs",
+  "name": "CoderRage GIFs",
+  "short_name": "CoderRage",
   "description": "Random GIFs to represent your anger, rage, ire, or annoyance for bad code.",
   "version": "0.1",
   "manifest_version":2,

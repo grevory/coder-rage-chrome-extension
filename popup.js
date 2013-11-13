@@ -79,9 +79,15 @@ var coderRageGifs = {
     if (!!post.tags.length) {
       $.each(post.tags, function(key, tag){
         $('.tags')
-          .append('<li class="tag'+(selectedTag === tag ? ' selected' : '')+'" onclick="coderRageGifs.setTemplate(\''+tag+'\')">#'+tag+'</li>');
+          .append('<li class="tag'+(selectedTag === tag ? ' selected' : '')+'" data-tag="'+tag+'">#'+tag+'</li>');
       })
     }
+
+    $('.tag')
+      .unbind('click')
+      .bind('click',function(){
+        $this.setTemplate($(this).attr('data-tag'));
+      });
   },
 
   getStretchedHeight: function(image) {

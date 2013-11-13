@@ -12,6 +12,7 @@ var coderRageGifs = {
   posts: null,
   randomPost: null,
   tag: null,
+  lastPostId: null,
 
   // Photos
   imageWidth: 350,
@@ -49,6 +50,8 @@ var coderRageGifs = {
     if (!post) {
       return null;
     }
+
+    this.lastPostId = post.id;
 
     var image = $this.extractImage(post);
 
@@ -109,8 +112,18 @@ var coderRageGifs = {
       posts = this.getPostsByTag(tag);
     }
 
-    this.randomPost = posts[Math.floor(Math.random() * posts.length)];
+    this.randomPost = posts[this.getRandomPostId(posts)];
     return this.randomPost;
+  },
+
+  getRandomPostId: function(posts) {
+    var id = Math.floor(Math.random() * posts.length);
+    console.log(posts.length > 1, id === this.lastPostId, posts.length, id, posts[id].id, this.lastPostId);
+    if (posts.length > 1 && posts[id].id === this.lastPostId) {
+      id = this.getRandomPostId(posts);
+    }
+    // Return the Tumblr ID since it is unique and doesn't change if the tag does
+    return id;
   },
 
   getPostsByTag: function(tag) {

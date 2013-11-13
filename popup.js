@@ -81,6 +81,8 @@ var coderRageGifs = {
     // Add the tags
     if (!!post.tags.length) {
       $.each(post.tags, function(key, tag){
+        // Since they are all Rage GIF, let's not bother showing that tag
+        if (tag === "Rage GIF") return;
         $('.tags')
           .append('<li class="tag'+(selectedTag === tag ? ' selected' : '')+'" data-tag="'+tag+'">#'+tag+'</li>');
       })
@@ -118,7 +120,6 @@ var coderRageGifs = {
 
   getRandomPostId: function(posts) {
     var id = Math.floor(Math.random() * posts.length);
-    console.log(posts.length > 1, id === this.lastPostId, posts.length, id, posts[id].id, this.lastPostId);
     if (posts.length > 1 && posts[id].id === this.lastPostId) {
       id = this.getRandomPostId(posts);
     }

@@ -12,6 +12,7 @@ var coderRageGifs = {
   posts: null,
   randomPost: null,
   tag: null,
+  lastPostId: null,
 
   // Photos
   imageWidth: 350,
@@ -50,6 +51,8 @@ var coderRageGifs = {
       return null;
     }
 
+    this.lastPostId = post.id;
+
     var image = $this.extractImage(post);
 
     // Draw the image
@@ -78,10 +81,18 @@ var coderRageGifs = {
     // Add the tags
     if (!!post.tags.length) {
       $.each(post.tags, function(key, tag){
+        // Since they are all Rage GIF, let's not bother showing that tag
+        if (tag === "Rage GIF") return;
         $('.tags')
-          .append('<li class="tag'+(selectedTag === tag ? ' selected' : '')+'" onclick="coderRageGifs.setTemplate(\''+tag+'\')">#'+tag+'</li>');
+          .append('<li class="tag'+(selectedTag === tag ? ' selected' : '')+'" data-tag="'+tag+'">#'+tag+'</li>');
       })
     }
+
+    $('.tag')
+      .unbind('click')
+      .bind('click',function(){
+        $this.setTemplate($(this).attr('data-tag'));
+      });
   },
 
   getStretchedHeight: function(image) {
@@ -103,8 +114,17 @@ var coderRageGifs = {
       posts = this.getPostsByTag(tag);
     }
 
-    this.randomPost = posts[Math.floor(Math.random() * posts.length)];
+    this.randomPost = posts[this.getRandomPostId(posts)];
     return this.randomPost;
+  },
+
+  getRandomPostId: function(posts) {
+    var id = Math.floor(Math.random() * posts.length);
+    if (posts.length > 1 && posts[id].id === this.lastPostId) {
+      id = this.getRandomPostId(posts);
+    }
+    // Return the Tumblr ID since it is unique and doesn't change if the tag does
+    return id;
   },
 
   getPostsByTag: function(tag) {

@@ -18,9 +18,9 @@ var coderRageGifs = {
   imageWidth: 350,
 
   init: function() {
-    
+
     var $this = this;
-    
+
     $('.coder-rage').css('width', $this.imageWidth);
     $this.getPosts();
   },
@@ -165,7 +165,7 @@ var coderRageGifs = {
     }
 
     if (type === "tag") {
-     return this.corsProxyUrl + this.apiBaseUrl + this.apiPhotosUrl + '?api_key=' + this.consumerKey + '&tag=' + value; 
+     return this.corsProxyUrl + this.apiBaseUrl + this.apiPhotosUrl + '?api_key=' + this.consumerKey + '&tag=' + value;
     }
   },
 

@@ -2,6 +2,9 @@ body {
   background: #000 url('img/coder-rage-bg.png');
   margin: 0;
 }
+* {
+    outline: none;
+}
 .coder-rage {
   width: 350px;
   margin: 10px;

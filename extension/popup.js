@@ -9,10 +9,11 @@ var coderRageGifs = {
   apiPhotosUrl: 'posts/photo/',
 
   // Posts
-  posts: null,
+  posts: [],
   randomPost: null,
   tag: null,
   lastPostId: null,
+  recentlySeen: [],
 
   // Photos
   imageWidth: 350,
@@ -20,23 +21,66 @@ var coderRageGifs = {
   init: function() {
 
     var $this = this;
+    var initialTemplateLoaded = false;
+
+    $this.posts = lscache.get('posts') || [];
+
+    if (!!$this.posts) {
+      $this.setTemplate();
+      initialTemplateLoaded = true;
+    }
 
     $('.coder-rage').css('width', $this.imageWidth);
-    $this.getPosts();
+    $this.getPosts(0);
+
+    if (!initialTemplateLoaded) {
+      $this.setTemplate();
+    }
   },
 
-  getPosts: function() {
+  getPosts: function(offset) {
     var $this = this;
-    $.get(this.getApiUrl(), function(data){
-      if (data.meta.status === 200) {
+    $.get(this.getApiUrl('photos',offset), function(data){
+      if (data.meta && data.meta.status === 200) {
         if (!data.response.posts.length) {
-          return null;
+          return;
         }
-        $this.posts = data.response.posts;
-        
-        $this.setTemplate();
+
+        if (data.response.total_posts === $this.posts.length) {
+          return;
+        }
+
+        var postsAdded = false;
+        $.each(data.response.posts, function(i, post){
+          postsAdded = $this.addToPosts(post);
+        });
+
+        offset = offset + 20;
+
+        if (offset < data.response.total_posts) {
+          $this.getPosts(offset);
+        }
       }
     });
+  },
+
+  addToPosts: function(post) {
+    if (!post) {
+      return false;
+    }
+
+    var $this = this;
+    var addedPost = false;
+
+    var tumblrIds = $.map($this.posts, function(post) { return post["id"]; });
+
+    if ($.inArray(post.id, tumblrIds) < 0) {
+      $this.posts.push(post);
+
+      lscache.set('posts', $this.posts);
+      addedPost = true;
+    }
+    return addedPost;
   },
 
   setTemplate: function(selectedTag) {
@@ -47,6 +91,7 @@ var coderRageGifs = {
     }
 
     var post = $this.getRandomPost(selectedTag);
+
     if (!post) {
       return null;
     }
@@ -119,10 +164,29 @@ var coderRageGifs = {
   },
 
   getRandomPostId: function(posts) {
-    var id = Math.floor(Math.random() * posts.length);
-    if (posts.length > 1 && posts[id].id === this.lastPostId) {
-      id = this.getRandomPostId(posts);
+    // $this = this;
+    // console.log(posts);
+    // console.log(Object.keys($this.posts));
+    // var postsLeft = jQuery.grep(posts, function(element, i){
+    //   console.log('id',element.id);
+    //   return !jQuery.inArray(element.id, $this.recentlySeen);
+    // });
+    // console.log(postsLeft);
+
+    var id;
+    var count = 0;
+
+    for (var prop in posts) {
+      if (Math.random() < 1/++count) {
+        id = prop;
+      }
     }
+
+    return id;
+    // var id = Math.floor(Math.random() * posts.length);
+    // if (posts.length > 1 && posts[id].id === this.lastPostId) {
+    //   id = this.getRandomPostId(posts);
+    // }
     // Return the Tumblr ID since it is unique and doesn't change if the tag does
     return id;
   },
@@ -137,7 +201,7 @@ var coderRageGifs = {
 
     var taggedPosts = [];
     $.each(posts, function(key, post){
-      if ($.inArray(tag, post.tags) >=0 ) {
+      if ($.inArray(tag, post.tags) >= 0 ) {
         taggedPosts.push(post);
       }
     });
@@ -161,7 +225,7 @@ var coderRageGifs = {
 
   getApiUrl: function(type, value) {
     if (type === "photos" || !type) {
-      return this.corsProxyUrl + this.apiBaseUrl + this.apiPhotosUrl + '?api_key=' + this.consumerKey;
+      return this.corsProxyUrl + this.apiBaseUrl + this.apiPhotosUrl + '?api_key=' + this.consumerKey + '&offset=' + value;
     }
 
     if (type === "tag") {

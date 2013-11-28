@@ -33,7 +33,7 @@ var coderRageGifs = {
           return null;
         }
         $this.posts = data.response.posts;
-
+        
         $this.setTemplate();
       }
     });
